@@ -8,6 +8,7 @@ import Typography from '@material-ui/core/Typography';
 import Box from '@material-ui/core/Box';
 import Button from '@material-ui/core/Button'
 import { DataTable } from '../Components/DataTable';
+import { ExperimentalTable } from '../Components/ExperimentalTable';
 
 function TabPanel(props) {
     const { children, value, index, ...other } = props;
@@ -69,13 +70,13 @@ export function ModelingCockpit() {
                 </Tabs>
             </AppBar>
             <TabPanel value={value} index={0}>
-                <DataTable />
+                <ExperimentalTable />
             </TabPanel>
             <TabPanel value={value} index={1}>
-                <DataTable />
+                <ExperimentalTable />
             </TabPanel>
             <TabPanel value={value} index={2}>
-                <DataTable />
+                <ExperimentalTable />
             </TabPanel>
         </div>
     );
