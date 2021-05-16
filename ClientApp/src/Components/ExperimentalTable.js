@@ -35,8 +35,8 @@ const _ExperimentalTable = (props) => {
                         <TableRow>
                             <TableCell></TableCell>
                             <TableCell></TableCell>
-                            <TableCell className={classes.titleCell} >Base year 1</TableCell>
-                            <TableCell className={classes.titleCell} >Base year 2</TableCell>
+                            <TableCell className={classes.titleCell} >Actuals-2</TableCell>
+                            <TableCell className={classes.titleCell} >Present year</TableCell>
                             <TableCell className={classes.titleCell} >Forecast year 1</TableCell>
                             <TableCell className={classes.titleCell} >Forecast year 2</TableCell>
                         </TableRow>
@@ -74,6 +74,7 @@ const _ExperimentalTable = (props) => {
             }
             workingRow.values[new Date(item.period).getFullYear() - 2019] = item.amounts_per_child_account_per_year;
         }
+        newData.push(workingRow)
         return newData;
     }
 
