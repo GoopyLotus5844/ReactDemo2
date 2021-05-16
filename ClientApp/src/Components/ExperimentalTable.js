@@ -20,8 +20,8 @@ const _ExperimentalTable = (props) => {
     const [data, setData] = useState([]);
     const [loading, setLoading] = useState(true);
 
-    const populateWeatherData = () => {
-        setData(stuff);
+    const populateWeatherData = async () => {
+        setData(process(stuff));
         setLoading(false);
     }
 
@@ -38,22 +38,43 @@ const _ExperimentalTable = (props) => {
                             <TableCell className={classes.titleCell} >Base year 1</TableCell>
                             <TableCell className={classes.titleCell} >Base year 2</TableCell>
                             <TableCell className={classes.titleCell} >Forecast year 1</TableCell>
+                            <TableCell className={classes.titleCell} >Forecast year 2</TableCell>
                         </TableRow>
                     </TableHead>
                     <TableBody>
                         {data.map(row => (
-                            <TableRow key={row.date}>
-                                <TableCell component="th" scope="row">{row.parentid}</TableCell>
-                                <TableCell>{row.childid}</TableCell>
-                                <TableCell align="right">{row.accountname}</TableCell>
-                                <TableCell align="right">{row.period}</TableCell>
-                                <TableCell align="right">{row.ftypeid}</TableCell>
+                            <TableRow key={row.accountname}>
+                                <TableCell component="th" scope="row">{row.childid}</TableCell>
+                                <TableCell>{row.accountname}</TableCell>
+                                <TableCell align="right">{row.values[0]}</TableCell>
+                                <TableCell align="right">{row.values[1]}</TableCell>
+                                <TableCell align="right">{row.values[2]}</TableCell>
+                                <TableCell align="right">{row.values[3]}</TableCell>
                             </TableRow>
                         ))}
                     </TableBody>
                 </Table>
             </TableContainer>
         );
+    }
+
+    const process = (data) => {
+        let newData = [];
+        let lastChildId = -1;
+        let workingRow;
+        for (const item of data) {
+            if (lastChildId != item.childid) {
+                if(lastChildId != -1) newData.push(workingRow);
+                lastChildId = item.childid;
+                workingRow = {
+                    'childid': item.childid,
+                    'accountname': item.accountname,
+                    'values': []
+                }
+            }
+            workingRow.values[new Date(item.period).getFullYear() - 2019] = item.amounts_per_child_account_per_year;
+        }
+        return newData;
     }
 
     return (
