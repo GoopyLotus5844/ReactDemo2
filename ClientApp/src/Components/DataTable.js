@@ -20,7 +20,7 @@ const _DataTable = (props) => {
     const [loading, setLoading] = useState(true);
 
     const populateWeatherData = async () => {
-        const response = await fetch('weatherforecast');
+        const response = await fetch('accounts');
         const data = await response.json();
         setData(data);
         setLoading(false);
