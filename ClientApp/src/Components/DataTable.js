@@ -16,19 +16,19 @@ const useStyles = makeStyles((theme) => ({
 
 const _DataTable = (props) => {
     const classes = useStyles();
-    const [forecasts, setForecasts] = useState([]);
+    const [data, setData] = useState([]);
     const [loading, setLoading] = useState(true);
 
     const populateWeatherData = async () => {
         const response = await fetch('weatherforecast');
         const data = await response.json();
-        setForecasts(data);
+        setData(data);
         setLoading(false);
     }
 
     useEffect(() => { populateWeatherData(); }, []);
 
-    const renderForecastsTable = (forecasts) => {
+    const renderDataTable = (data) => {
         return (
             <TableContainer component={Paper}>
                 <Table className={classes.table} aria-label="simple table">
@@ -42,13 +42,13 @@ const _DataTable = (props) => {
                         </TableRow>
                     </TableHead>
                     <TableBody>
-                        {forecasts.map(forecast => (
-                            <TableRow key={forecast.date}>
-                                <TableCell component="th" scope="row">{forecast.entryID}</TableCell>
-                                <TableCell>{forecast.entryName}</TableCell>
-                                <TableCell align="right">{forecast.baseYear1}</TableCell>
-                                <TableCell align="right">{forecast.baseYear2}</TableCell>
-                                <TableCell align="right">{forecast.forecastYear1}</TableCell>
+                        {data.map(row => (
+                            <TableRow key={row.date}>
+                                <TableCell component="th" scope="row">{row.entryID}</TableCell>
+                                <TableCell>{row.entryName}</TableCell>
+                                <TableCell align="right">{row.baseYear1}</TableCell>
+                                <TableCell align="right">{row.baseYear2}</TableCell>
+                                <TableCell align="right">{row.forecastYear1}</TableCell>
                             </TableRow>
                         ))}
                     </TableBody>
@@ -61,7 +61,7 @@ const _DataTable = (props) => {
         <div>
             {loading
                 ? <p><em>Loading...</em></p>
-                : renderForecastsTable(forecasts)
+                : renderDataTable(data)
             }
         </div>
     );
