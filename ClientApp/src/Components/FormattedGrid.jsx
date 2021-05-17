@@ -5,7 +5,6 @@ import {
     randomTraderName,
     randomUpdatedDate,
 } from '@material-ui/x-grid-data-generator';
-import { makeStyles } from '@material-ui/core/styles';
 import { useState } from 'react';
 import { useEffect } from 'react';
 import stuff from '../data';
@@ -13,13 +12,7 @@ import stuff from '../data';
 const _FormattedGrid = (props) => {
     const [data, setData] = useState([]);
 
-    
-
-    return (
-        <div style={{ height: 300, width: '100%' }}>
-            <DataGrid rows={rows} columns={columns} />
-        </div>
-    );
+    useEffect(() => { setData(process(stuff)); }, []);
 
     const process = (data) => {
         let newData = [];
@@ -37,18 +30,41 @@ const _FormattedGrid = (props) => {
                 workingRow = {
                     'id': item.childid,
                     'accountname': item.accountname,
-                    'values': []
+                    'year1': 0,
+                    'year2': 0,
+                    'year3': 0,
+                    'year4': 0
                 }
             }
-            workingRow.values[new Date(item.period).getFullYear() - 2019] = item.amounts_per_child_account_per_year;
+            //workingRow.values[new Date(item.period).getFullYear() - 2019] = item.amounts_per_child_account_per_year;
+            let yearNum = new Date(item.period).getFullYear() - 2019;
+            if (yearNum == 0) workingRow.year1 = item.amounts_per_child_account_per_year;
+            if (yearNum == 1) workingRow.year2 = item.amounts_per_child_account_per_year;
+            if (yearNum == 2) workingRow.year3 = item.amounts_per_child_account_per_year;
+            if (yearNum == 3) workingRow.year4 = item.amounts_per_child_account_per_year;
         }
         newData.push(workingRow)
+        console.log(newData);
         return newData;
     }
-    useEffect(() => { setData(process(stuff)); }, []);
+
+    return (
+        <div style={{ height: 800, width: '100%' }}>
+            <DataGrid style={{ colCellSortable: false }} rows={data} columns={columns} />
+        </div>
+    );
 }
 
 const columns = [
+    { field: 'id', headerName: 'ID', type: 'number', editable: false, width: 180 },
+    { field: 'accountname', headerName: 'Account name', type: 'string', editable: false, width: 300 },
+    { field: 'year1', headerName: 'Actuals-2', type: 'number', editable: false, width: 180 },
+    { field: 'year2', headerName: 'Present year', type: 'number', editable: false, width: 180 },
+    { field: 'year3', headerName: 'Forecast year 1', type: 'number', editable: false, width: 180 },
+    { field: 'year4', headerName: 'Forecast year 2', type: 'number', editable: false, width: 180 },
+];
+
+const columns2 = [
     { field: 'name', headerName: 'Name', width: 180, editable: true },
     { field: 'age', headerName: 'Age', type: 'number', editable: true },
     {
