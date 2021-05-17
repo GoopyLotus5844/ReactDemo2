@@ -8,7 +8,7 @@ import Typography from '@material-ui/core/Typography';
 import Box from '@material-ui/core/Box';
 import Button from '@material-ui/core/Button'
 import { DataTable } from '../Components/DataTable';
-import { ExperimentalTable } from '../Components/ExperimentalTable';
+import { FormattedTable } from '../Components/FormattedTable';
 
 function TabPanel(props) {
     const { children, value, index, ...other } = props;
@@ -54,7 +54,6 @@ const useStyles = makeStyles((theme) => ({
 export function ModelingCockpit() {
     const classes = useStyles();
     const [value, setValue] = React.useState(0);
-    const [number, setNumber] = React.useState(0);
 
     const handleChange = (event, newValue) => {
         setValue(newValue);
@@ -70,13 +69,13 @@ export function ModelingCockpit() {
                 </Tabs>
             </AppBar>
             <TabPanel value={value} index={0}>
-                <ExperimentalTable />
+                <FormattedTable />
             </TabPanel>
             <TabPanel value={value} index={1}>
-                <ExperimentalTable />
+                <FormattedTable />
             </TabPanel>
             <TabPanel value={value} index={2}>
-                <ExperimentalTable />
+                <FormattedTable />
             </TabPanel>
         </div>
     );

@@ -15,7 +15,7 @@ const useStyles = makeStyles((theme) => ({
     }
 }));
 
-const _ExperimentalTable = (props) => {
+const _FormattedTable = (props) => {
     const classes = useStyles();
     const [data, setData] = useState([]);
     const [loading, setLoading] = useState(true);
@@ -93,4 +93,4 @@ const _ExperimentalTable = (props) => {
     );
 }
 
-export const ExperimentalTable = _ExperimentalTable;
+export const FormattedTable = _FormattedTable;
