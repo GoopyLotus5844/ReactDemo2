@@ -148,7 +148,7 @@ export function PageWrapper(props) {
                         <ListItemIcon><HomeIcon /></ListItemIcon>
                         <ListItemText primary={"Modeling Cockpit"} />
                     </ListItem>
-                    <ListItem button key={"ForecastButton"} onClick={() => history.push("/")}>
+                    <ListItem button key={"ForecastButton"} onClick={() => history.push("/datagrid")}>
                         <ListItemIcon><AssignmentIcon /></ListItemIcon>
                         <ListItemText primary={"Account Forecast"} />
                     </ListItem>
