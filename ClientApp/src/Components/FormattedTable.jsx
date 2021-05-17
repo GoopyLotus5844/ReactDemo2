@@ -18,14 +18,8 @@ const useStyles = makeStyles((theme) => ({
 const _FormattedTable = (props) => {
     const classes = useStyles();
     const [data, setData] = useState([]);
-    const [loading, setLoading] = useState(true);
 
-    const populateWeatherData = async () => {
-        setData(process(stuff));
-        setLoading(false);
-    }
-
-    useEffect(() => { populateWeatherData(); }, []);
+    useEffect(() => { setData(process(stuff)); }, []);
 
     const renderDataTable = (data) => {
         return (
@@ -85,10 +79,7 @@ const _FormattedTable = (props) => {
 
     return (
         <div>
-            {loading
-                ? <p><em>Loading...</em></p>
-                : renderDataTable(data)
-            }
+            {renderDataTable(data)}
         </div>
     );
 }
