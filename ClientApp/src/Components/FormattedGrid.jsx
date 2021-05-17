@@ -5,13 +5,47 @@ import {
     randomTraderName,
     randomUpdatedDate,
 } from '@material-ui/x-grid-data-generator';
+import { makeStyles } from '@material-ui/core/styles';
+import { useState } from 'react';
+import { useEffect } from 'react';
+import stuff from '../data';
 
-export default function BasicEditingGrid() {
+const _FormattedGrid = (props) => {
+    const [data, setData] = useState([]);
+
+    
+
     return (
         <div style={{ height: 300, width: '100%' }}>
             <DataGrid rows={rows} columns={columns} />
         </div>
     );
+
+    const process = (data) => {
+        let newData = [];
+        let lastChildId = -1;
+        let lastParentId = -1;
+        let workingRow;
+        for (const item of data) {
+            if (lastChildId != item.childid) {
+                if (lastChildId != -1) newData.push(workingRow);
+                if (item.parentid != lastParentId) {
+                    newData.push({ 'id': item.parentid, 'accountname': '', 'values': [] })
+                    lastParentId = item.parentid;
+                }
+                lastChildId = item.childid;
+                workingRow = {
+                    'id': item.childid,
+                    'accountname': item.accountname,
+                    'values': []
+                }
+            }
+            workingRow.values[new Date(item.period).getFullYear() - 2019] = item.amounts_per_child_account_per_year;
+        }
+        newData.push(workingRow)
+        return newData;
+    }
+    useEffect(() => { setData(process(stuff)); }, []);
 }
 
 const columns = [
@@ -70,3 +104,5 @@ const rows = [
         lastLogin: randomUpdatedDate(),
     },
 ];
+
+export const FormattedGrid = _FormattedGrid;
