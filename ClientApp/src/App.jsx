@@ -3,6 +3,7 @@ import { Route, Switch } from 'react-router';
 import { Home } from './Pages/Home';
 import { FetchDataDemo } from './Pages/FetchDataDemo';
 import { ModelingCockpit } from './Pages/ModelingCockpit';
+import BasicEditingGrid from './Pages/DataTableTest'
 import { PageWrapper } from './Components/PageWrapper'
 import { CssBaseline, MuiThemeProvider } from '@material-ui/core';
 import { lightTheme, darkTheme } from './Styles/ApplicationTheme'
@@ -31,6 +32,7 @@ function App() {
                         <Route exact path='/' component={Home} />
                         <Route path='/modeling' component={ModelingCockpit} />
                         <Route path='/fetch-data' component={FetchDataDemo} />
+                        <Route path='/datagrid' component={BasicEditingGrid} />
                     </Switch>
                 </PageWrapper>
             </CssBaseline>
