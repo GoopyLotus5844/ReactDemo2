@@ -44,7 +44,7 @@ const _ExperimentalTable = (props) => {
                     <TableBody>
                         {data.map(row => (
                             <TableRow key={row.accountname}>
-                                <TableCell component="th" scope="row">{row.childid}</TableCell>
+                                <TableCell component="th" scope="row">{row.id}</TableCell>
                                 <TableCell>{row.accountname}</TableCell>
                                 <TableCell align="right">{row.values[0]}</TableCell>
                                 <TableCell align="right">{row.values[1]}</TableCell>
@@ -61,13 +61,18 @@ const _ExperimentalTable = (props) => {
     const process = (data) => {
         let newData = [];
         let lastChildId = -1;
+        let lastParentId = -1;
         let workingRow;
         for (const item of data) {
             if (lastChildId != item.childid) {
-                if(lastChildId != -1) newData.push(workingRow);
+                if (lastChildId != -1) newData.push(workingRow);
+                if (item.parentid != lastParentId) {
+                    newData.push({ 'id': item.parentid, 'accountname': '', 'values': [] })
+                    lastParentId = item.parentid;
+                }
                 lastChildId = item.childid;
                 workingRow = {
-                    'childid': item.childid,
+                    'id': item.childid,
                     'accountname': item.accountname,
                     'values': []
                 }
